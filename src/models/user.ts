@@ -1,6 +1,8 @@
 import { Schema, model } from "mongoose";
 import { LangType } from "./../localization";
 
+const languages = ["ru", "en", "es"];
+
 const userSchema = new Schema<UserType>({
     email: {
         type: String,
@@ -22,9 +24,15 @@ const userSchema = new Schema<UserType>({
     },
     lang: {
         type: String,
-        enum: ["ru", "en", "es"],
+        enum: languages,
         required: true,
     },
+    langInterface: {
+        type: String,
+        enum: languages,
+        required: true,
+        default: "en",
+    }
 });
 
 export type UserType = {
@@ -34,6 +42,7 @@ export type UserType = {
     token: string | null
     name: string
     lang: LangType
+    langInterface: LangType
 }
 
 export default model<UserType>("User", userSchema);
